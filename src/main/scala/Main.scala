@@ -2,8 +2,8 @@
   * Created by Fraser on 05/06/2017.
   */
 object Main {
-  //adds two value together if add is true,if false will multiply them together. will return the larger number if um1 or num2 is 0
 
+  //returns true if the number is not zero
   def notZero(number : Int) : Boolean = number match {
     case 0 => false
     case _ => true
@@ -37,6 +37,7 @@ object Main {
       case 1 => num1 //num2 was 0 so return num1
       case 2 => num2 //num1 was 0 so return num2
       case 3 => num2+num1 //both had value so add them
+      case _ => println("Error number out of expected range"); 0
     }
   }
 
@@ -69,6 +70,7 @@ object Main {
       case 1 => num1 //num2 was 0 so return num1
       case 2 => num2 //num1 was 0 so return num2
       case 3 => num2*num1 //both had value so add them
+      case _ => println("Error number out of expected range"); 0
     }
   }
 
@@ -79,10 +81,29 @@ object Main {
     }
   }
 
+  def swapNumbers(numbers : Any) : Any = numbers match{
+    case arrayItem:Array[Int] => Array(arrayItem(1), arrayItem.head)
+    case listItem:List[Int] => List(listItem(1), listItem(0));
+    case tupleItem:Tuple2[Int, Int] => Tuple2(tupleItem._2, tupleItem._1)
+    case _ => println("not a handled type")
+  }
+
   def main(args : Array[String]) : Unit = {
-    println("2 + 5 = " + calculate(2,5, true))
-    println("2 * 5 = " + calculate(2,5,false))
-    println("0,5 passed: " + calculate(0,5,false))
-    println("2,0 passed: " + calculate(2,0,true))
+    val add : Boolean = true
+    val multiply : Boolean = false
+
+    //test the different parameters
+    println("2 + 5 = " + calculate(2,5, add))//test adding
+    println("2 * 5 = " + calculate(2,5,multiply))//test multiplying
+    println("0,5 passed: " + calculate(0,5,multiply))//test multiplying with a single 0
+    println("2,0 passed: " + calculate(2,0,add))//test adding with a single 0
+    println("0,0 passed: " + calculate(0,0,add))//test adding with a two 0
+
+    //add a blank line
+    println()
+    println("Array(1,2), swap numbers: "+swapNumbers(Array(1,2)).toString)
+    println("List(3,4), swap numbers: "+swapNumbers(List(3,4)).toString())
+    println("Tuple(5,6), swap numbers: "+swapNumbers(Tuple2(5, 6)).toString())
+    println("Array(1,2,3,4,5), swap numbers: "+swapNumbers(Array(1,2,3,4,5)).toString())
   }
 }
